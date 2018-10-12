@@ -12,7 +12,13 @@ export default class Paddle {
     }
 
     draw(ctx) {
+        ctx.fillStyle = "#f58";
         ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
+    }
+
+    update(dt) {
+        if (!dt) { return }
+        this.pos.x += 5 / dt;
     }
 
 }
