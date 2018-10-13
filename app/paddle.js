@@ -43,7 +43,6 @@ export default class Paddle {
     }
 
     update(dt) {
-        if (!dt) { return }
 
         this.pos.x += this.speed;
 
