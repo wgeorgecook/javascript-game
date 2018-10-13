@@ -27,7 +27,7 @@ function gameLoop(timeStamp) {
     paddle.update(dt);
     paddle.draw(ctx);
     ball.draw(ctx);
-
+    requestAnimationFrame(gameLoop);
 }
 
 requestAnimationFrame(gameLoop);
