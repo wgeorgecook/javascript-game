@@ -26,5 +26,18 @@ export default class Ball {
         if (this.pos.y + this.size > this.gameHeight || this.pos.y < 0) {
             this.speed.y = -this.speed.y
         }
+
+        // paddle collision
+        let bottom = this.pos.y + this.size;
+        let topPaddle = this.game.paddle.pos.y;
+        let leftPaddle = this.game.paddle.pos.x;
+        let rightPaddle = this.game.paddle.pos.x + this.game.paddle.width;
+        if (bottom >= topPaddle &&
+            this.pos.x >= leftPaddle &&
+            this.pos.x + this.size <= rightPaddle
+            ) {
+            this.speed.y = -this.speed.y;
+            this.pos.y = this.game.paddle.pos.y - this.size;
+        }
     }
 }
