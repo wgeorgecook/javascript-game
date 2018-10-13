@@ -21,12 +21,17 @@ export default class Ball {
         this.pos.y += this.speed.y;
 
         // wall collisions
-        if (this.pos.x + this.size > this.gameWidth || this.pos.x < 0) { // top or bottom
+        if (this.pos.x + this.size > this.gameWidth || this.pos.x < 0) { // side collision
             this.speed.x = -this.speed.x
         }
 
-        if (this.pos.y + this.size > this.gameHeight || this.pos.y < 0) { // side collision
-            this.speed.y = -this.speed.y
+        if ( this.pos.y < 0 ) { // Top collision
+            this.speed.y = -this.speed.y;
+        }
+
+        if ( this.pos.y + this.size > this.gameHeight ) { // Bottom collision
+            this.game.lives -= 1;
+            this.speed.y = -this.speed.y;
         }
 
         // object collision
