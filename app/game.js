@@ -20,7 +20,7 @@ export default class Game {
         this.ball = new Ball(this);
         new InputHandler(this.paddle, this);
         this.gameObjects = [];
-        this.lives = 1;
+        this.lives = 3;
     }
 
     start() {
