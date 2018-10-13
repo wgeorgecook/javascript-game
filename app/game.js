@@ -18,11 +18,10 @@ export default class Game {
     }
 
     start() {
-        this.gameState = GAMESTATE.RUNNING;
+        this.gameState = GAMESTATE.MENU;
         this.paddle = new Paddle(this);
         this.ball = new Ball(this);
         new InputHandler(this.paddle, this);
-        // this.brick = new Brick(this, {x: 20, y: 20});
         let bricks = buildLevel(this, level1);
 
 
@@ -35,7 +34,7 @@ export default class Game {
     }
 
     update(dt) {
-        if ( this.gameState === GAMESTATE.PAUSED ) { return }
+        if ( this.gameState === GAMESTATE.PAUSED || this.gameState === GAMESTATE.MENU ) { return }
         this.gameObjects.forEach( (object) => object.update(dt))
         this.gameObjects = this.gameObjects.filter( object => !object.toDelete)
     }
@@ -43,7 +42,22 @@ export default class Game {
     draw(ctx) {
         this.gameObjects.forEach( (object) => object.draw(ctx))
 
-        if ( this.gameState === GAMESTATE.PAUSED ) {
+        // At menu
+        if ( this.gameState === GAMESTATE.MENU) {
+            // background fill
+            ctx.rect(0,0,this.gameWidth, this.gameHeight);
+            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+            ctx.fill()
+
+            // text fill
+            ctx.font = "30px Arial";
+            ctx.fillStyle = "white";
+            ctx.textAlign = "center";
+            ctx.fillText("Press Spacebar to Begin", this.gameWidth / 2, this.gameHeight / 2);
+        }
+
+        // When paused
+        if ( this.gameState === GAMESTATE.PAUSED) {
             // background fill
             ctx.rect(0,0,this.gameWidth, this.gameHeight);
             ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
