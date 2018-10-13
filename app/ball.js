@@ -1,16 +1,11 @@
 export default class Ball {
-    constructor(gameHeight, gameWidth) {
-        this.gameHeight = gameHeight;
-        this.gameWidth = gameWidth;
+
+    constructor(game) {
+        this.gameHeight = game.gameHeight;
+        this.gameWidth = game.gameWidth;
         this.img = document.querySelector('#img_ball');
-        this.speed = {
-            x: 2,
-            y: 2
-        };
-        this.pos = {
-            x: 10,
-            y: 10
-        };
+        this.speed = { x: 2, y: 2 };
+        this.pos = { x: 10, y: 10 };
         this.size = 16;
     }
 

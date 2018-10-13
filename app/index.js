@@ -1,7 +1,5 @@
 // Game Engine
-import Paddle from '/app/paddle.js';
-import InputHandler from '/app/input.js';
-import Ball from '/app/ball.js';
+import Game from './game.js';
 
 let canvas = document.querySelector('#gameScreen');
 let ctx = canvas.getContext('2d');
@@ -10,12 +8,11 @@ const GAME_HEIGHT = 600;
 const GAME_WIDTH = 800;
 
 
-let paddle = new Paddle(GAME_HEIGHT, GAME_WIDTH);
-let ball = new Ball(GAME_HEIGHT, GAME_WIDTH);
+let game = new Game(GAME_WIDTH, GAME_HEIGHT)
 
-paddle.draw(ctx)
+game.start()
 
-new InputHandler(paddle);
+
 
 let lastTime = 0;
 
@@ -24,10 +21,11 @@ function gameLoop(timeStamp) {
     lastTime = timeStamp;
     // clear the screen on render
     ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-    paddle.update(dt);
-    paddle.draw(ctx);
-    ball.update(dt);
-    ball.draw(ctx);
+
+    game.update(dt);
+
+    game.draw(ctx);
+
     requestAnimationFrame(gameLoop);
 }
 
