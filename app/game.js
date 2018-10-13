@@ -1,13 +1,14 @@
 import Paddle from '/app/paddle.js';
 import Ball from '/app/ball.js';
 import InputHandler from '/app/input.js';
-import { buildLevel, level1 } from '/app/levels.js'
+import { buildLevel, level1, level2 } from '/app/levels.js'
 
 const GAMESTATE = {
     PAUSED: 0,
     RUNNING: 1,
     MENU: 2,
-    GAMEOVER: 3
+    GAMEOVER: 3,
+    NEWLEVEL: 4,
 }
 
 export default class Game {
@@ -20,23 +21,30 @@ export default class Game {
         this.ball = new Ball(this);
         new InputHandler(this.paddle, this);
         this.gameObjects = [];
+        this.bricks = [];
         this.lives = 3;
+        this.levels = [level1, level2];
+        this.currentLevel = 0;
     }
 
     start() {
-        if ( this.gameState !== GAMESTATE.MENU ) { return }
-        let bricks = buildLevel(this, level1);
+        console.log(this.currentLevel)
+        if ( this.gameState !== GAMESTATE.MENU &&
+             this.gamesState !== GAMESTATE.NEWLEVEL
+            ) { return }
 
+        this.bricks = buildLevel(this, this.levels[this.currentLevel]);
+        this.ball.reset();
 
         this.gameObjects = [
             this.ball,
             this.paddle,
-            ...bricks
         ]
         this.gameState = GAMESTATE.RUNNING;
     }
 
     update(dt) {
+
         if (this.lives === 0) { this.gameState = GAMESTATE.GAMEOVER };
 
         if ( this.gameState === GAMESTATE.PAUSED ||
@@ -44,12 +52,19 @@ export default class Game {
             this.gameState === GAMESTATE.GAMEOVER
             ) { return };
 
-        this.gameObjects.forEach( (object) => object.update(dt))
-        this.gameObjects = this.gameObjects.filter( object => !object.toDelete)
+        if (this.bricks.length === 0 ) {
+            this.currentLevel ++;
+            this.gameState === GAMESTATE.NEWLEVEL;
+            this.start();
+        };
+
+        [...this.gameObjects, ...this.bricks].forEach( (object) => object.update(dt))
+
+        this.bricks = this.bricks.filter( brick => !brick.toDelete)
     }
 
     draw(ctx) {
-        this.gameObjects.forEach( (object) => object.draw(ctx))
+        [...this.gameObjects, ...this.bricks].forEach( (object) => object.draw(ctx))
 
         // At menu
         if ( this.gameState === GAMESTATE.MENU) {
