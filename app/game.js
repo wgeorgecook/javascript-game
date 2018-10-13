@@ -15,13 +15,14 @@ export default class Game {
     constructor(gameWidth, gameHeight) {
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
-    }
-
-    start() {
         this.gameState = GAMESTATE.MENU;
         this.paddle = new Paddle(this);
         this.ball = new Ball(this);
         new InputHandler(this.paddle, this);
+        this.gameObjects = [];
+    }
+
+    start() {
         let bricks = buildLevel(this, level1);
 
 
@@ -30,7 +31,7 @@ export default class Game {
             this.paddle,
             ...bricks
         ]
-
+        this.gameState = GAMESTATE.RUNNING;
     }
 
     update(dt) {
