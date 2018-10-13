@@ -8,7 +8,7 @@ export default class Ball {
         this.gameWidth = game.gameWidth;
         this.img = document.querySelector('#img_ball');
         this.speed = { x: 2, y: 2 };
-        this.pos = { x: 10, y: 10 };
+        this.pos = { x: 10, y: 200 };
         this.size = 16;
     }
 
