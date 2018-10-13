@@ -3,6 +3,13 @@ import Ball from '/app/ball.js';
 import InputHandler from '/app/input.js';
 import { buildLevel, level1 } from '/app/levels.js'
 
+const GAMESTATE = {
+    PAUSED: 0,
+    RUNNING: 1,
+    MENU: 2,
+    GAMEOVER: 3
+}
+
 export default class Game {
 
     constructor(gameWidth, gameHeight) {
@@ -11,10 +18,10 @@ export default class Game {
     }
 
     start() {
-
+        this.gameState = GAMESTATE.RUNNING;
         this.paddle = new Paddle(this);
         this.ball = new Ball(this);
-        new InputHandler(this.paddle);
+        new InputHandler(this.paddle, this);
         // this.brick = new Brick(this, {x: 20, y: 20});
         let bricks = buildLevel(this, level1);
 
@@ -28,11 +35,20 @@ export default class Game {
     }
 
     update(dt) {
+        if ( this.gameState === GAMESTATE.PAUSED ) { return }
         this.gameObjects.forEach( (object) => object.update(dt))
         this.gameObjects = this.gameObjects.filter( object => !object.toDelete)
     }
 
     draw(ctx) {
         this.gameObjects.forEach( (object) => object.draw(ctx))
+    }
+
+    togglePause() {
+        if (this.gameState === GAMESTATE.PAUSED) {
+            this.gameState = GAMESTATE.RUNNING;
+        } else {
+            this.gameState = GAMESTATE.PAUSED
+        }
     }
 }
