@@ -22,7 +22,7 @@ function gameLoop(timeStamp) {
     lastTime = timeStamp;
     // clear the screen on render
     ctx.clearRect(0, 0, 800, 600);
-    // paddle.update(dt);
+    paddle.update(dt);
     paddle.draw(ctx);
     requestAnimationFrame(gameLoop);
 }
