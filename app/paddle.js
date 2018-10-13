@@ -16,6 +16,16 @@ export default class Paddle {
         ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
     }
 
+    move(dir) {
+        switch(dir) {
+            case 37:
+                this.pos.x -= 5;
+                break;
+            case 39:
+                this.pos.x += 5;
+                break;
+        }
+    }
     update(dt) {
         if (!dt) { return }
         this.pos.x += 5 / dt;
