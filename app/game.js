@@ -44,9 +44,16 @@ export default class Game {
         this.gameObjects.forEach( (object) => object.draw(ctx))
 
         if ( this.gameState === GAMESTATE.PAUSED ) {
+            // background fill
             ctx.rect(0,0,this.gameWidth, this.gameHeight);
             ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
             ctx.fill()
+
+            // text fill
+            ctx.font = "30px Arial";
+            ctx.fillStyle = "white";
+            ctx.textAlign = "center";
+            ctx.fillText("Paused", this.gameWidth / 2, this.gameHeight / 2);
         }
     }
 
