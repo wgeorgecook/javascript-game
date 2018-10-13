@@ -12,6 +12,11 @@ export default class Ball {
         this.size = 16;
     }
 
+    reset() {
+        this.speed = { x: 2, y: 2 };
+        this.pos = { x: 10, y: 200 };
+    }
+
     draw(ctx) {
         ctx.drawImage(this.img, this.pos.x, this.pos.y, this.size, this.size)
     }
@@ -31,7 +36,7 @@ export default class Ball {
 
         if ( this.pos.y + this.size > this.gameHeight ) { // Bottom collision
             this.game.lives -= 1;
-            this.speed.y = -this.speed.y;
+            this.reset();
         }
 
         // object collision
