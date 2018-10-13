@@ -1,3 +1,5 @@
+import { collisionDetection } from '/app/collisionDetection.js'
+
 export default class Ball {
 
     constructor(game) {
@@ -17,5 +19,20 @@ export default class Ball {
     update(dt) {
         this.pos.x += this.speed.x;
         this.pos.y += this.speed.y;
+
+        // wall collisions
+        if (this.pos.x + this.size > this.gameWidth || this.pos.x < 0) { // top or bottom
+            this.speed.x = -this.speed.x
+        }
+
+        if (this.pos.y + this.size > this.gameHeight || this.pos.y < 0) { // side collision
+            this.speed.y = -this.speed.y
+        }
+
+        // object collision
+        if( collisionDetection(this, this.game.paddle) ) {
+            this.speed.y = -this.speed.y;
+            this.pos.y = this.game.paddle.pos.y - this.size;
+        }
     }
 }
