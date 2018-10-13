@@ -42,6 +42,12 @@ export default class Game {
 
     draw(ctx) {
         this.gameObjects.forEach( (object) => object.draw(ctx))
+
+        if ( this.gameState === GAMESTATE.PAUSED ) {
+            ctx.rect(0,0,this.gameWidth, this.gameHeight);
+            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+            ctx.fill()
+        }
     }
 
     togglePause() {
