@@ -3,7 +3,7 @@ export default class Brick {
         this.img = document.querySelector('#img_brick');
         this.game = game;
         this.pos = pos;
-        this.width = 52;
+        this.width = 80;
         this.height = 24;
     }
 
