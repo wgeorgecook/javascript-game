@@ -29,6 +29,7 @@ export default class Game {
 
     update(dt) {
         this.gameObjects.forEach( (object) => object.update(dt))
+        this.gameObjects = this.gameObjects.filter( object => !object.toDelete)
     }
 
     draw(ctx) {
