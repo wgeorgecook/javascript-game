@@ -30,6 +30,18 @@ export default class Paddle {
                 break;
         }
     }
+
+    stop(dir) {
+        switch(dir) {
+            case 37:
+                if (this.speed < 0) {this.speed = 0;}
+                break;
+            case 39:
+                if (this.speed > 0) {this.speed = 0;}
+                break;
+        }
+    }
+
     update(dt) {
         if (!dt) { return }
 
