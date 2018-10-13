@@ -17,27 +17,5 @@ export default class Ball {
     update(dt) {
         this.pos.x += this.speed.x;
         this.pos.y += this.speed.y;
-
-        // wall collisions
-        if (this.pos.x + this.size > this.gameWidth || this.pos.x < 0) {
-            this.speed.x = -this.speed.x
-        }
-
-        if (this.pos.y + this.size > this.gameHeight || this.pos.y < 0) {
-            this.speed.y = -this.speed.y
-        }
-
-        // paddle collision
-        let bottom = this.pos.y + this.size;
-        let topPaddle = this.game.paddle.pos.y;
-        let leftPaddle = this.game.paddle.pos.x;
-        let rightPaddle = this.game.paddle.pos.x + this.game.paddle.width;
-        if (bottom >= topPaddle &&
-            this.pos.x >= leftPaddle &&
-            this.pos.x + this.size <= rightPaddle
-            ) {
-            this.speed.y = -this.speed.y;
-            this.pos.y = this.game.paddle.pos.y - this.size;
-        }
     }
 }
