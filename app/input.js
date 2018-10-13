@@ -4,7 +4,16 @@ export default class InputHandler {
 
     constructor(paddle, game) {
         document.addEventListener('keydown', (e) => {
-            (e.keyCode === 27) ? game.togglePause() : paddle.move(e.keyCode);
+            switch (e.keyCode) {
+                case 27:
+                    game.togglePause();
+                    break;
+                case 32:
+                    game.start();
+                    break;
+                default:
+                    paddle.move(e.keyCode);
+            }
         });
 
         document.addEventListener('keyup', (e) => {
