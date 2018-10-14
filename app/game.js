@@ -28,23 +28,21 @@ export default class Game {
     }
 
     start() {
-        console.log(this.currentLevel)
-        if ( this.gameState !== GAMESTATE.MENU &&
-             this.gamesState !== GAMESTATE.NEWLEVEL
-            ) { return }
 
+        if ( this.gameState === GAMESTATE.MENU &&
+             this.gamesState === GAMESTATE.NEWLEVEL
+            )
+            return;
+
+        console.log('Start!')
         this.bricks = buildLevel(this, this.levels[this.currentLevel]);
         this.ball.reset();
 
-        this.gameObjects = [
-            this.ball,
-            this.paddle,
-        ]
+        this.gameObjects = [ this.ball, this.paddle ]
         this.gameState = GAMESTATE.RUNNING;
     }
 
     update(dt) {
-
         if (this.lives === 0) { this.gameState = GAMESTATE.GAMEOVER };
 
         if ( this.gameState === GAMESTATE.PAUSED ||
@@ -52,11 +50,13 @@ export default class Game {
             this.gameState === GAMESTATE.GAMEOVER
             ) { return };
 
+
         if (this.bricks.length === 0 ) {
+            this.gameState = GAMESTATE.NEWLEVEL;
             this.currentLevel ++;
-            this.gameState === GAMESTATE.NEWLEVEL;
             this.start();
         };
+
 
         [...this.gameObjects, ...this.bricks].forEach( (object) => object.update(dt))
 
